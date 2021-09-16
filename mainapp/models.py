@@ -14,8 +14,8 @@ from io import BytesIO
 #***********
 #1 Category
 #2 Product
-#3 CartProduct
-#4 Cart
+#3 cartProduct
+#4 cart
 #5 Order
 #***********
 #6 Customer
