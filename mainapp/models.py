@@ -130,8 +130,8 @@ class Smartphone(Product):
     resolution = models.CharField(max_length=255, verbose_name='Display resolution')
     acum_volume = models.CharField(max_length=255, verbose_name='Battery volume')
     ram = models.CharField(max_length=255, verbose_name='Primary storage')
-    sd = models.BooleanField(default=True)
-    sd_volume_max = models.CharField(max_length=255, verbose_name='Maximum memory')
+    sd = models.BooleanField(default=True, verbose_name='SD existence')
+    sd_volume_max = models.CharField(max_length=255, null=True, blank=True, verbose_name='Maximum memory')
     main_cam_mp = models.CharField(max_length=255, verbose_name='Main camera')
     frontal_cam_mp = models.CharField(max_length=255, verbose_name='Frontal camera')
 
@@ -140,6 +140,12 @@ class Smartphone(Product):
 
     def get_absolute_url(self):
         return get_product_url(self,'product_detail')
+
+    # @property
+    # def sd(self):
+    #     if self.sd:
+    #         return 'yes'
+    #     return 'No'
 
 class CartProduct(models.Model):
 
@@ -152,7 +158,7 @@ class CartProduct(models.Model):
     final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Total price')
 
     def __str__(self):
-        return "Product: {} (for the cart)".format(self.product.title)
+        return "Product: {} (for the cart)".format(self.content_object.title)
 
 class Cart(models.Model):
 
@@ -160,6 +166,8 @@ class Cart(models.Model):
     products = models.ManyToManyField(CartProduct, blank = True, related_name='related_cart')
     total_products = models.PositiveIntegerField(default=0)
     final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Total price')
+    in_order = models.BooleanField(default=False)
+    for_anonymous_user = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)
