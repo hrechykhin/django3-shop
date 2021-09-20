@@ -13,7 +13,7 @@ class SmartphoneAdminForm(ModelForm):
         instance = kwargs.get('instance')
         if instance and not instance.sd:
             self.fields['sd_volume_max'].widget.attrs.update({
-                'readonly':True, 'style':'background:lightgray'
+                'readonly':True, 'style':'background:lightgray;'
             })
 
     def clean(self):
